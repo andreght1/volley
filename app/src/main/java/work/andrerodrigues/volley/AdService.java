@@ -15,7 +15,7 @@ public class AdService {
         for (int i=0; i<10; i++) {
             Ad ad = new Ad();
             ad.setName("Anúncio");
-            ad.setUrlImg("http://");
+            ad.setUrlImg("http://bomercado.com.br/panel/img/products/fchPZwAv_006464.jpg");
             ads.add(ad);
         }
         return ads;

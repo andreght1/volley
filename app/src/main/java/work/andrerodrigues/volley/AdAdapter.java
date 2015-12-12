@@ -5,67 +5,62 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
+import javax.security.auth.callback.Callback;
 
 /**
  * Created by Andre on 07/12/2015.
  */
-public class AdAdapter extends RecyclerView.Adapter<AdAdapter.AdsViewHolder> {
+public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
 
     protected static final String TAG = "andrerodrigues";
-    private final List<Ad> ads;
     private final Context context;
-    private final AdOnClickListener adOnClickListener;
+    private final List<Ad> ads;
 
-    public interface AdOnClickListener {
-        public void onClickAd(View view, int idx);
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public View mView;
+        public ImageView mImageView;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+            mImageView = (ImageView) itemView.findViewById(R.id.image);
+        }
     }
 
-    public AdAdapter(Context context, List<Ad> ads, AdOnClickListener adOnClickListener) {
+    public AdAdapter(Context context, List<Ad> ads) {
         this.context = context;
         this.ads = ads;
-        this.adOnClickListener = adOnClickListener;
     }
 
     @Override
-    public AdsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_ad,parent,false);
-        AdsViewHolder holder = new AdsViewHolder(view);
-        return holder;
+    public AdAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_ad, parent, false);
+        // set the view's size, margins, paddings and layout parameters
+
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final AdsViewHolder holder, final int position) {
-        // Update View
-        Ad a = ads.get(position);
-        holder.name.setText(a.getName());
-
-        // Click
-        if (adOnClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    //
-                    adOnClickListener.onClickAd(holder.itemView, position);
-                }
-            });
-        }
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+//        holder.mTextView.setText(ads.get(position).getName());
+        Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(holder.mImageView);
     }
 
+    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return this.ads != null ? ads.size() : 0;
-    }
-
-    public static class AdsViewHolder extends RecyclerView.ViewHolder {
-        private TextView name;
-        private View itemView;
-        public AdsViewHolder(View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-            name = (TextView) itemView.findViewById(R.id.text);
-        }
+        return ads.size();
     }
 }

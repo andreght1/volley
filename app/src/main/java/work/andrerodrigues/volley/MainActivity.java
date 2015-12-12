@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private AdAdapter mAdAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private List<Ad> ads;
 
     @Override
@@ -24,24 +23,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // RecyclerView
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
 
         // Set Adapter
         ads = AdService.getAds(this);
-        mAdAdapter = new AdAdapter(this, ads, onClickAd());
+        mAdAdapter = new AdAdapter(this, ads);
         mRecyclerView.setAdapter(mAdAdapter);
     }
-
-    private AdAdapter.AdOnClickListener onClickAd() {
-        return new AdAdapter.AdOnClickListener() {
-            @Override
-            public void onClickAd(View view, int idx) {
-                Ad a = ads.get(idx);
-                Toast.makeText(getApplicationContext(), "Anúncio: " + a.getName(), Toast.LENGTH_SHORT).show();
-            }
-        };
-    };
 }
