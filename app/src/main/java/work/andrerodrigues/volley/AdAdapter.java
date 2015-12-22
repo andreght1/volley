@@ -26,11 +26,15 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View mView;
         public ImageView mImageView;
+        public TextView mTextName;
+        public TextView mTextAge;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             mImageView = (ImageView) itemView.findViewById(R.id.image);
+            mTextName = (TextView) itemView.findViewById(R.id.person_name);
+            mTextAge = (TextView) itemView.findViewById(R.id.person_age);
         }
     }
 
@@ -56,6 +60,8 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
         // - replace the contents of the view with that element
 //        holder.mTextView.setText(ads.get(position).getName());
         Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(holder.mImageView);
+        holder.mTextName.setText("André");
+        holder.mTextAge.setText("22");
     }
 
     // Return the size of your dataset (invoked by the layout manager)
